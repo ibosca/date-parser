@@ -12,11 +12,13 @@ interface TimeModifier {
 export class DateParser {
 
     public parse(datestring: DateString): Date {
-        const output: Date = new Date();
         const timeModifiers: TimeModifier[] = this.buildTimeModifiersFromDateString(datestring);
+
+        console.log(timeModifiers);
+
         return timeModifiers.reduce((carry, modifier): Date => {
             return this.apply(modifier, carry);
-        }, output);
+        }, new Date());
     }
     public stringify(date: Date): DateString {
         return '';
@@ -27,14 +29,33 @@ export class DateParser {
     }
 
     private buildTimeModifiersFromDateString(datestring: DateString): TimeModifier[] {
-        const operationalModifiers = datestring.match(/[+-]?\d+[dMyhmsw]/);
-        console.log(operationalModifiers);
+        return [
+            ...this.buildOperationalModifiers(datestring),
+            ...this.buildRoundModifiers(datestring)
+        ];
+    }
 
-        const roundModifiers = datestring.match(/\/[dMyhmsw]/);
-        console.log(roundModifiers);
+    private buildOperationalModifiers(datestring: DateString): TimeModifier[] {
+        const operationalModifiers = datestring.match(/[+-]?\d+[dMyhmsw]/) ?? [];
 
+        return operationalModifiers.map((stringModifier): TimeModifier => {
+            return {
+                timeOperator: stringModifier.charAt(0) as TimeOperator,
+                timeUnit: stringModifier.charAt(stringModifier.length - 1) as TimeUnit,
+                timeAmount: Number(stringModifier.substring(1, stringModifier.length - 1)),
+            };
+        });
+    }
 
-        return [];
+    private buildRoundModifiers(datestring: DateString): TimeModifier[] {
+        const roundModifiers = datestring.match(/\/[dMyhmsw]/) ?? [];
+
+        return roundModifiers.map((stringModifier): TimeModifier => {
+            return {
+                timeOperator: stringModifier.charAt(0) as TimeOperator,
+                timeUnit: stringModifier.charAt(stringModifier.length - 1) as TimeUnit,
+            };
+        });
     }
 
     private apply(timeModifier: TimeModifier, date: Date): Date {
