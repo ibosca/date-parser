@@ -1,13 +1,6 @@
+import {TimeModifier, TimeOperator, TimeUnit} from "./time-modifier";
 
 type DateString = String;
-type TimeOperator = '+' | '-' | '/';
-type TimeUnit = 'd' | 'M' | 'y' | 'h' | 'm' | 's' | 'w';
-
-interface TimeModifier {
-    timeOperator: TimeOperator,
-    timeUnit: TimeUnit,
-    timeAmount?: number | undefined
-}
 
 export class DateParser {
 
@@ -33,11 +26,11 @@ export class DateParser {
         const operationalModifiers = datestring.match(/[+-]?\d+[dMyhmsw]/g) ?? [];
 
         return operationalModifiers.map((stringModifier): TimeModifier => {
-            return {
-                timeOperator: stringModifier.charAt(0) as TimeOperator,
-                timeUnit: stringModifier.charAt(stringModifier.length - 1) as TimeUnit,
-                timeAmount: Number(stringModifier.substring(1, stringModifier.length - 1)),
-            };
+            return new TimeModifier(
+                stringModifier.charAt(0) as TimeOperator,
+                stringModifier.charAt(stringModifier.length - 1) as TimeUnit,
+                Number(stringModifier.substring(1, stringModifier.length - 1)),
+            );
         });
     }
 
@@ -45,10 +38,10 @@ export class DateParser {
         const roundModifiers = datestring.match(/\/[dMyhmsw]/) ?? [];
 
         return roundModifiers.map((stringModifier): TimeModifier => {
-            return {
-                timeOperator: stringModifier.charAt(0) as TimeOperator,
-                timeUnit: stringModifier.charAt(stringModifier.length - 1) as TimeUnit,
-            };
+            return new TimeModifier(
+                stringModifier.charAt(0) as TimeOperator,
+                stringModifier.charAt(stringModifier.length - 1) as TimeUnit,
+        );
         });
     }
 
