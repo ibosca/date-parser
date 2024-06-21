@@ -30,7 +30,7 @@ export class DateParser {
     }
 
     private buildOperationalModifiers(datestring: DateString): TimeModifier[] {
-        const operationalModifiers = datestring.match(/[+-]?\d+[dMyhmsw]/) ?? [];
+        const operationalModifiers = datestring.match(/[+-]?\d+[dMyhmsw]/g) ?? [];
 
         return operationalModifiers.map((stringModifier): TimeModifier => {
             return {

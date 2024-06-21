@@ -41,6 +41,10 @@ describe('Date Parser', () => {
         expect(actual).toStrictEqual(expected);
     });
 
-
+    test('now-4d-4h', () => {
+        const expected: Date = new Date('2020-04-26T20:00:00.000Z');
+        const actual: Date = sut.parse('now-4d-4h');
+        expect(actual).toStrictEqual(expected);
+    });
 
 });
