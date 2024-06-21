@@ -23,16 +23,16 @@ export class TimeModifier {
 
     private applyOperationModifier(date: Date): Date {
 
-        const timeAmount: number = Number(`${this.timeOperator}${this.timeAmount!}`);
+
 
         const operations: { [key: string]: (amount: number) => void } = {
-            "d": (amount: number) => date.setUTCDate(date.getUTCDate() + amount),
-            "M": (amount: number) => date.setUTCMonth(date.getUTCMonth() + amount),
-            "y": (amount: number) => date.setUTCFullYear(date.getFullYear() + amount),
-            "h": (amount: number) => date.setUTCHours(date.getUTCHours() + amount),
-            "m": (amount: number) => date.setUTCMinutes(date.getUTCMinutes() + amount),
-            "s": (amount: number) => date.setUTCSeconds(date.getUTCSeconds() + amount),
-            "w": (amount: number) => date.setUTCDate(date.getUTCDate() + amount * 7)
+            "d": (amount: number) => this.addDay(date, amount),
+            "M": (amount: number) => this.addMonth(date, amount),
+            "y": (amount: number) => this.addYear(date, amount),
+            "h": (amount: number) => this.addHour(date, amount),
+            "m": (amount: number) => this.addMinute(date, amount),
+            "s": (amount: number) => this.addSecond(date, amount),
+            "w": (amount: number) => this.addWeek(date, amount),
         };
 
         const operation = operations[this.timeUnit];
@@ -40,6 +40,7 @@ export class TimeModifier {
             throw new Error('Wrong time unit provided!')
         }
 
+        const timeAmount: number = Number(`${this.timeOperator}${this.timeAmount!}`);
         operation(timeAmount);
         return date;
     }
@@ -135,6 +136,38 @@ export class TimeModifier {
             ? date.setDate(date.getDate() + (7 - dayOfWeek))
             : date.setDate(date.getDate() - dayOfWeek)
 
+        return date;
+    }
+
+    private addDay(date: Date, amount: number): Date {
+        date.setUTCDate(date.getUTCDate() + amount)
+        return date;
+    }
+
+    private addMonth(date: Date, amount: number): Date {
+        date.setUTCMonth(date.getUTCMonth() + amount)
+        return date;
+    }
+
+    private addYear(date: Date, amount: number): Date {
+        date.setUTCFullYear(date.getFullYear() + amount)
+        return date;
+    }
+
+    private addHour(date: Date, amount: number): Date {
+        date.setUTCHours(date.getUTCHours() + amount)
+        return date;
+    }
+    private addMinute(date: Date, amount: number): Date {
+        date.setUTCMinutes(date.getUTCMinutes() + amount)
+        return date;
+    }
+    private addSecond(date: Date, amount: number): Date {
+        date.setUTCSeconds(date.getUTCSeconds() + amount)
+        return date;
+    }
+    private addWeek(date: Date, amount: number): Date {
+        date.setUTCDate(date.getUTCDate() + amount * 7)
         return date;
     }
 }
