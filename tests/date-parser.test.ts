@@ -28,4 +28,10 @@ describe('Date Parser', () => {
         expect(actual).toBe(expected);
     });
 
+    test('parse now-1d', () => {
+        const expected: Date = new Date('2020-04-30T00:00:00.000Z');
+        const actual: Date = sut.parse('now-1d');
+        expect(actual).toStrictEqual(expected);
+    });
+
 });

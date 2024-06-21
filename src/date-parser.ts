@@ -14,8 +14,6 @@ export class DateParser {
     public parse(datestring: DateString): Date {
         const timeModifiers: TimeModifier[] = this.buildTimeModifiersFromDateString(datestring);
 
-        console.log(timeModifiers);
-
         return timeModifiers.reduce((carry, modifier): Date => {
             return this.apply(modifier, carry);
         }, new Date());
@@ -59,6 +57,80 @@ export class DateParser {
     }
 
     private apply(timeModifier: TimeModifier, date: Date): Date {
+        if (this.isAdditionModifier(timeModifier)) {
+            return this.applyAdditionModifier(timeModifier, date);
+        }
+
+        if (this.isSubstractModifier(timeModifier)) {
+            return this.applySubtractModifier(timeModifier, date);
+        }
+
+        return this.applyRoundModifier(timeModifier, date);
+    }
+
+    private isAdditionModifier(timeModifier: TimeModifier): boolean {
+        return timeModifier.timeOperator == "+";
+    }
+
+    private isSubstractModifier(timeModifier: TimeModifier): boolean {
+        return timeModifier.timeOperator == "-";
+    }
+
+    private applyAdditionModifier(timeModifier: TimeModifier, date: Date): Date {
+        switch (timeModifier.timeUnit) {
+            case "d":
+                date.setDate(date.getDate() + timeModifier.timeAmount!);
+                break;
+            case "M":
+                date.setMonth(date.getMonth() + timeModifier.timeAmount!);
+                break;
+            case "y":
+                date.setFullYear(date.getFullYear() + timeModifier.timeAmount!);
+                break;
+            case "h":
+                date.setHours(date.getHours() + timeModifier.timeAmount!);
+                break;
+            case "m":
+                date.setMinutes(date.getMinutes() + timeModifier.timeAmount!);
+                break;
+            case "s":
+                date.setSeconds(date.getSeconds() + timeModifier.timeAmount!);
+                break
+            case "w":
+                date.setDate(date.getDate() + timeModifier.timeAmount! * 7);
+                break
+        }
+        return date;
+    }
+
+    private applySubtractModifier(timeModifier: TimeModifier, date: Date): Date {
+        switch (timeModifier.timeUnit) {
+            case "d":
+                date.setDate(date.getDate() - timeModifier.timeAmount!);
+                break;
+            case "M":
+                date.setMonth(date.getMonth() - timeModifier.timeAmount!);
+                break;
+            case "y":
+                date.setFullYear(date.getFullYear() - timeModifier.timeAmount!);
+                break;
+            case "h":
+                date.setHours(date.getHours() - timeModifier.timeAmount!);
+                break;
+            case "m":
+                date.setMinutes(date.getMinutes() - timeModifier.timeAmount!);
+                break;
+            case "s":
+                date.setSeconds(date.getSeconds() - timeModifier.timeAmount!);
+                break
+            case "w":
+                date.setDate(date.getDate() - timeModifier.timeAmount! * 7);
+                break
+        }
+        return date;
+    }
+
+    private applyRoundModifier(timeModifier: TimeModifier, date: Date): Date {
         return date;
     }
 }
