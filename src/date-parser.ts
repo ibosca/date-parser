@@ -22,10 +22,6 @@ export class DateParser {
         return '';
     }
 
-    public sum(a: number, b: number): number {
-        return a + b;
-    }
-
     private buildTimeModifiersFromDateString(datestring: DateString): TimeModifier[] {
         return [
             ...this.buildOperationalModifiers(datestring),

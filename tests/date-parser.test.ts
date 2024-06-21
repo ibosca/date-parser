@@ -17,14 +17,15 @@ describe('Date Parser', () => {
         jest.useRealTimers();
     });
 
-    test('adds 1 + 2 to equal 3', () => {
-        const sut = new DateParser();
-        expect(sut.sum(1, 2)).toBe(3);
-    });
-
     test('parse now-1y/y', () => {
         const expected: Date = new Date('2019-01-01T00:00:00.000Z');
         const actual: Date = sut.parse('now-1y/y');
+        expect(actual).toStrictEqual(expected);
+    });
+
+    test('parse now/y', () => {
+        const expected: Date = new Date('2020-01-01T00:00:00.000Z');
+        const actual: Date = sut.parse('now/y');
         expect(actual).toStrictEqual(expected);
     });
 
@@ -33,5 +34,13 @@ describe('Date Parser', () => {
         const actual: Date = sut.parse('now-1d');
         expect(actual).toStrictEqual(expected);
     });
+
+    test('parse now+1d', () => {
+        const expected: Date = new Date('2020-05-02T00:00:00.000Z');
+        const actual: Date = sut.parse('now+1d');
+        expect(actual).toStrictEqual(expected);
+    });
+
+
 
 });
