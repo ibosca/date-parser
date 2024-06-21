@@ -1,23 +1,10 @@
-import {TimeModifier, TimeOperator, TimeUnit} from "./time-modifier";
-import {AddTimeModifier} from "./add-time-modifier";
-import {RoundTimeModifier} from "./round-time-modifier";
+import {TimeModifier, TimeOperator, TimeUnit} from "../domain/time-modifier";
+import {AddTimeModifier} from "../domain/add-time-modifier";
+import {RoundTimeModifier} from "../domain/round-time-modifier";
+import {DateString} from "./date-parser";
 
-type DateString = String;
-
-export class DateParser {
-
-    public parse(datestring: DateString): Date {
-        const timeModifiers: TimeModifier[] = this.buildTimeModifiersFromDateString(datestring);
-
-        return timeModifiers.reduce((carry, modifier): Date => {
-            return modifier.apply(carry);
-        }, new Date());
-    }
-    public stringify(date: Date): DateString {
-        return '';
-    }
-
-    private buildTimeModifiersFromDateString(datestring: DateString): TimeModifier[] {
+export class TimeModifierExtractor {
+    public extract(datestring: DateString): TimeModifier[] {
         return [
             ...this.buildAddModifiers(datestring),
             ...this.buildRoundModifiers(datestring)
@@ -46,6 +33,4 @@ export class DateParser {
             );
         });
     }
-
-
 }
