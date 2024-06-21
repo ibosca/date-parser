@@ -1,4 +1,6 @@
 import {TimeModifier, TimeOperator, TimeUnit} from "./time-modifier";
+import {AddTimeModifier} from "./add-time-modifier";
+import {RoundTimeModifier} from "./round-time-modifier";
 
 type DateString = String;
 
@@ -17,16 +19,16 @@ export class DateParser {
 
     private buildTimeModifiersFromDateString(datestring: DateString): TimeModifier[] {
         return [
-            ...this.buildOperationalModifiers(datestring),
+            ...this.buildAddModifiers(datestring),
             ...this.buildRoundModifiers(datestring)
         ];
     }
 
-    private buildOperationalModifiers(datestring: DateString): TimeModifier[] {
+    private buildAddModifiers(datestring: DateString): TimeModifier[] {
         const operationalModifiers = datestring.match(/[+-]?\d+[dMyhmsw]/g) ?? [];
 
         return operationalModifiers.map((stringModifier): TimeModifier => {
-            return new TimeModifier(
+            return new AddTimeModifier(
                 stringModifier.charAt(0) as TimeOperator,
                 stringModifier.charAt(stringModifier.length - 1) as TimeUnit,
                 Number(stringModifier.substring(1, stringModifier.length - 1)),
@@ -38,10 +40,10 @@ export class DateParser {
         const roundModifiers = datestring.match(/\/[dMyhmsw]/) ?? [];
 
         return roundModifiers.map((stringModifier): TimeModifier => {
-            return new TimeModifier(
+            return new RoundTimeModifier(
                 stringModifier.charAt(0) as TimeOperator,
-                stringModifier.charAt(stringModifier.length - 1) as TimeUnit,
-        );
+                stringModifier.charAt(stringModifier.length - 1) as TimeUnit
+            );
         });
     }
 
