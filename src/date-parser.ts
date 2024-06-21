@@ -58,11 +58,11 @@ export class DateParser {
 
     private apply(timeModifier: TimeModifier, date: Date): Date {
         if (this.isAdditionModifier(timeModifier)) {
-            return this.applyAdditionModifier(timeModifier, date);
+            return this.applyOperationModifier(timeModifier, date);
         }
 
         if (this.isSubstractModifier(timeModifier)) {
-            return this.applySubtractModifier(timeModifier, date);
+            return this.applyOperationModifier(timeModifier, date);
         }
 
         return this.applyRoundModifier(timeModifier, date);
@@ -76,55 +76,31 @@ export class DateParser {
         return timeModifier.timeOperator == "-";
     }
 
-    private applyAdditionModifier(timeModifier: TimeModifier, date: Date): Date {
-        switch (timeModifier.timeUnit) {
-            case "d":
-                date.setDate(date.getDate() + timeModifier.timeAmount!);
-                break;
-            case "M":
-                date.setMonth(date.getMonth() + timeModifier.timeAmount!);
-                break;
-            case "y":
-                date.setFullYear(date.getFullYear() + timeModifier.timeAmount!);
-                break;
-            case "h":
-                date.setHours(date.getHours() + timeModifier.timeAmount!);
-                break;
-            case "m":
-                date.setMinutes(date.getMinutes() + timeModifier.timeAmount!);
-                break;
-            case "s":
-                date.setSeconds(date.getSeconds() + timeModifier.timeAmount!);
-                break
-            case "w":
-                date.setDate(date.getDate() + timeModifier.timeAmount! * 7);
-                break
-        }
-        return date;
-    }
+    private applyOperationModifier(timeModifier: TimeModifier, date: Date): Date {
 
-    private applySubtractModifier(timeModifier: TimeModifier, date: Date): Date {
+        const timeAmount: number = Number(`${timeModifier.timeOperator}${timeModifier.timeAmount!}`);
+
         switch (timeModifier.timeUnit) {
             case "d":
-                date.setDate(date.getDate() - timeModifier.timeAmount!);
+                date.setDate(date.getDate() + timeAmount);
                 break;
             case "M":
-                date.setMonth(date.getMonth() - timeModifier.timeAmount!);
+                date.setMonth(date.getMonth() + timeAmount);
                 break;
             case "y":
-                date.setFullYear(date.getFullYear() - timeModifier.timeAmount!);
+                date.setFullYear(date.getFullYear() + timeAmount);
                 break;
             case "h":
-                date.setHours(date.getHours() - timeModifier.timeAmount!);
+                date.setHours(date.getHours() + timeAmount);
                 break;
             case "m":
-                date.setMinutes(date.getMinutes() - timeModifier.timeAmount!);
+                date.setMinutes(date.getMinutes() + timeAmount);
                 break;
             case "s":
-                date.setSeconds(date.getSeconds() - timeModifier.timeAmount!);
+                date.setSeconds(date.getSeconds() + timeAmount);
                 break
             case "w":
-                date.setDate(date.getDate() - timeModifier.timeAmount! * 7);
+                date.setDate(date.getDate() + timeAmount * 7);
                 break
         }
         return date;
