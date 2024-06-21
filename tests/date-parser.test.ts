@@ -25,7 +25,7 @@ describe('Date Parser', () => {
     test('parse now-1y/y', () => {
         const expected: Date = new Date('2019-01-01T00:00:00.000Z');
         const actual: Date = sut.parse('now-1y/y');
-        expect(actual).toBe(expected);
+        expect(actual).toStrictEqual(expected);
     });
 
     test('parse now-1d', () => {
