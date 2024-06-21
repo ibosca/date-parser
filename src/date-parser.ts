@@ -57,11 +57,7 @@ export class DateParser {
     }
 
     private apply(timeModifier: TimeModifier, date: Date): Date {
-        if (this.isAdditionModifier(timeModifier)) {
-            return this.applyOperationModifier(timeModifier, date);
-        }
-
-        if (this.isSubstractModifier(timeModifier)) {
+        if (this.isAdditionModifier(timeModifier) || this.isSubstractModifier(timeModifier)) {
             return this.applyOperationModifier(timeModifier, date);
         }
 
@@ -80,29 +76,22 @@ export class DateParser {
 
         const timeAmount: number = Number(`${timeModifier.timeOperator}${timeModifier.timeAmount!}`);
 
-        switch (timeModifier.timeUnit) {
-            case "d":
-                date.setDate(date.getDate() + timeAmount);
-                break;
-            case "M":
-                date.setMonth(date.getMonth() + timeAmount);
-                break;
-            case "y":
-                date.setFullYear(date.getFullYear() + timeAmount);
-                break;
-            case "h":
-                date.setHours(date.getHours() + timeAmount);
-                break;
-            case "m":
-                date.setMinutes(date.getMinutes() + timeAmount);
-                break;
-            case "s":
-                date.setSeconds(date.getSeconds() + timeAmount);
-                break
-            case "w":
-                date.setDate(date.getDate() + timeAmount * 7);
-                break
+        const operations: { [key: string]: (amount: number) => void } = {
+            "d": (amount: number) => date.setDate(date.getDate() + amount),
+            "M": (amount: number) => date.setMonth(date.getMonth() + amount),
+            "y": (amount: number) => date.setFullYear(date.getFullYear() + amount),
+            "h": (amount: number) => date.setHours(date.getHours() + amount),
+            "m": (amount: number) => date.setMinutes(date.getMinutes() + amount),
+            "s": (amount: number) => date.setSeconds(date.getSeconds() + amount),
+            "w": (amount: number) => date.setDate(date.getDate() + amount * 7)
+        };
+
+        const operation = operations[timeModifier.timeUnit];
+        if (!operation) {
+            throw new Error('Wrong time unit provided!')
         }
+
+        operation(timeAmount);
         return date;
     }
 
