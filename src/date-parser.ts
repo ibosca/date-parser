@@ -46,19 +46,11 @@ export class DateParser {
     }
 
     private apply(timeModifier: TimeModifier, date: Date): Date {
-        if (this.isAdditionModifier(timeModifier) || this.isSubtractModifier(timeModifier)) {
+        if (!timeModifier.isRoundOperator()) {
             return this.applyOperationModifier(timeModifier, date);
         }
 
         return this.applyRoundModifier(timeModifier, date);
-    }
-
-    private isAdditionModifier(timeModifier: TimeModifier): boolean {
-        return timeModifier.timeOperator == "+";
-    }
-
-    private isSubtractModifier(timeModifier: TimeModifier): boolean {
-        return timeModifier.timeOperator == "-";
     }
 
     private applyOperationModifier(timeModifier: TimeModifier, date: Date): Date {

@@ -8,4 +8,8 @@ export class TimeModifier {
         public readonly timeUnit: TimeUnit,
         public readonly timeAmount?: number | undefined
     ) {}
+
+    public isRoundOperator(): boolean {
+        return this.timeOperator == "/";
+    }
 }
