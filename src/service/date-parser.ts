@@ -1,4 +1,4 @@
-import {TimeModifier, TimeOperator, TimeUnit} from "../domain/time-modifier";
+import {TimeModifier} from "../domain/time-modifier";
 import {TimeModifierExtractor} from "./time-modifier-extractor";
 
 export type DateString = String;
@@ -24,12 +24,12 @@ export class DateParser {
 
         const current = new Date();
 
-        const diff = new Date(date.getTime() - current.getTime());
         console.log(`
         Current: ${current.toISOString()} 
         Date: ${date.toISOString()} 
         
         Years: ${this.yearDiff(current, date)}
+        Is rounded: ${this.isYearRounded(current, date)}
         Month: ${this.monthDiff(current, date)}
         Week: ${this.weekDiff(current, date)}
         Day: ${this.dayDiff(current, date)}
@@ -70,6 +70,37 @@ export class DateParser {
         return date.getUTCSeconds() - current.getUTCSeconds();
     }
 
+    private millisecondDiff(current: Date, date: Date): number {
+        return date.getUTCMilliseconds() - current.getUTCMilliseconds();
+    }
+
+    private isSecondRounded(current: Date, date: Date): boolean {
+        return this.millisecondDiff(current, date) == 0;
+    }
+
+    private isMinuteRounded(current: Date, date: Date): boolean {
+        return this.secondDiff(current, date) == 0 && this.isSecondRounded(current, date);
+    }
+
+    private isHourRounded(current: Date, date: Date): boolean {
+        return this.minuteDiff(current, date) == 0 && this.isSecondRounded(current, date);
+    }
+
+    private isDayRounded(current: Date, date: Date): boolean {
+        return this.hourDiff(current, date) == 0 && this.isMinuteRounded(current, date);
+    }
+
+    private isWeekRounded(current: Date, date: Date): boolean {
+        return this.dayDiff(current, date) == 0 && this.isHourRounded(current, date);
+    }
+
+    private isMonthRounded(current: Date, date: Date): boolean {
+        return this.weekDiff(current, date) == 0 && this.isDayRounded(current, date);
+    }
+
+    private isYearRounded(current: Date, date: Date): boolean {
+        return this.monthDiff(current, date) == 0 && this.isWeekRounded(current, date);
+    }
 
 
 
