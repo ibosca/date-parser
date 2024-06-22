@@ -1,6 +1,6 @@
-import {TimeModifier, TimeOperator, TimeUnit} from "../domain/time-modifier";
-import {AddTimeModifier} from "../domain/add-time-modifier";
-import {RoundTimeModifier} from "../domain/round-time-modifier";
+import {TimeModifier, TimeOperator, TimeUnit} from "../domain/timeModifier/time-modifier";
+import {AddTimeModifier} from "../domain/timeModifier/add-time-modifier";
+import {RoundTimeModifier} from "../domain/timeModifier/round-time-modifier";
 import {DateString} from "./date-parser";
 
 export class TimeModifierExtractor {

@@ -1,6 +1,13 @@
-import {TimeModifier, TimeUnit} from "../domain/time-modifier";
+import {TimeModifier} from "../domain/timeModifier/time-modifier";
 import {TimeModifierExtractor} from "./time-modifier-extractor";
-import {DateStringifier} from "./date-stringifier";
+import {TimeChecker} from "../domain/timeChecker/time-checker";
+import {YearTimeChecker} from "../domain/timeChecker/year-time-checker";
+import {MonthTimeChecker} from "../domain/timeChecker/month-time-checker";
+import {WeekTimeChecker} from "../domain/timeChecker/week-time-checker";
+import {DayTimeChecker} from "../domain/timeChecker/day-time-checker";
+import {HourTimeChecker} from "../domain/timeChecker/hour-time-checker";
+import {MinuteTimeChecker} from "../domain/timeChecker/minute-time-checker";
+import {SecondTimeChecker} from "../domain/timeChecker/second-time-checker";
 
 export type DateString = String;
 
@@ -10,7 +17,6 @@ export class DateParser {
 
     constructor(
         private readonly timeModifierExtractor: TimeModifierExtractor,
-        private readonly dateStringifier: DateStringifier
     ) {}
 
     public parse(datestring: DateString): Date {
@@ -21,7 +27,26 @@ export class DateParser {
         }, new Date());
     }
     public stringify(date: Date): DateString {
-        return this.dateStringifier.toString(date);
+        const current = new Date();
+
+        const output = TimeChecker.toString(current, date, [
+            new YearTimeChecker(),
+            new MonthTimeChecker(),
+            new WeekTimeChecker(),
+            new DayTimeChecker(),
+            new HourTimeChecker(),
+            new MinuteTimeChecker(),
+            new SecondTimeChecker()
+        ]);
+
+        console.log(`
+        Current: ${current.toISOString()} 
+        Date: ${date.toISOString()} 
+        
+        Output: ${output}
+        `);
+
+        return output;
     }
 
 

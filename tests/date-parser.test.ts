@@ -1,6 +1,5 @@
 import {DateParser} from "../src/service/date-parser";
 import {TimeModifierExtractor} from "../src/service/time-modifier-extractor";
-import {DateStringifier} from "../src/service/date-stringifier";
 
 describe('Date Parser', () => {
 
@@ -13,8 +12,7 @@ describe('Date Parser', () => {
         jest.setSystemTime(mockedDate);
 
         const extractor = new TimeModifierExtractor();
-        const stringifier = new DateStringifier();
-        sut = new DateParser(extractor, stringifier);
+        sut = new DateParser(extractor);
     });
 
     afterEach(() => {
