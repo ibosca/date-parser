@@ -1,7 +1,16 @@
-import {TimeModifier} from "../domain/time-modifier";
+import {TimeModifier, TimeUnit} from "../domain/time-modifier";
 import {TimeModifierExtractor} from "./time-modifier-extractor";
 
 export type DateString = String;
+
+type TimeDiff = (current: Date, date: Date) => number;
+type TimeRounded = (current: Date, date: Date) => boolean;
+
+type StringifyChecker = {
+    unit: TimeUnit,
+    diff: TimeDiff,
+    rounded: TimeRounded
+};
 
 export class DateParser {
 
@@ -22,23 +31,69 @@ export class DateParser {
         // date: 2019-05-01T00:00:00.000Z
         // expected output: now-1y
 
+        let output: DateString = 'now';
         const current = new Date();
+
+        const checkers: StringifyChecker[] = [
+            {
+                unit: 'y',
+                diff: (current: Date, date: Date) => this.yearDiff(current, date),
+                rounded: (current: Date, date: Date) => this.isYearRounded(current, date)},
+            {
+                unit: 'M',
+                diff: (current: Date, date: Date) => this.monthDiff(current, date),
+                rounded: (current: Date, date: Date) => this.isMonthRounded(current, date)
+            },
+            {
+                unit: 'w',
+                diff: (current: Date, date: Date) => this.weekDiff(current, date),
+                rounded: (current: Date, date: Date) => this.isWeekRounded(current, date)
+            },
+            {
+                unit: 'd',
+                diff: (current: Date, date: Date) => this.dayDiff(current, date),
+                rounded: (current: Date, date: Date) => this.isDayRounded(current, date)
+            },
+            {
+                unit: 'h',
+                diff: (current: Date, date: Date) => this.hourDiff(current, date),
+                rounded: (current: Date, date: Date) => this.isHourRounded(current, date)
+            },
+            {
+                unit: 'm',
+                diff: (current: Date, date: Date) => this.minuteDiff(current, date),
+                rounded: (current: Date, date: Date) => this.isMinuteRounded(current, date)
+            },
+            {
+                unit: 's',
+                diff: (current: Date, date: Date) => this.secondDiff(current, date),
+                rounded: (current: Date, date: Date) => this.isSecondRounded(current, date)
+            },
+        ];
+
+        for (const checker of checkers as StringifyChecker[]) {
+            const difference: number = checker.diff(current, date);
+
+            if (difference !== 0) {
+                const differenceWithSign: string = difference > 0 ? `+${difference}`: String(difference);
+                output = output.concat(`${differenceWithSign}${checker.unit}`);
+            }
+
+            const isRounded: boolean = checker.rounded(current, date);
+            if (isRounded) {
+                output = output.concat(`/${checker.unit}`);
+                break;
+            }
+        }
 
         console.log(`
         Current: ${current.toISOString()} 
         Date: ${date.toISOString()} 
         
-        Years: ${this.yearDiff(current, date)}
-        Is rounded: ${this.isYearRounded(current, date)}
-        Month: ${this.monthDiff(current, date)}
-        Week: ${this.weekDiff(current, date)}
-        Day: ${this.dayDiff(current, date)}
-        Hour: ${this.hourDiff(current, date)}
-        Minute: ${this.minuteDiff(current, date)}
-        Second: ${this.secondDiff(current, date)}
+        Output: ${output}
         `);
 
-        return "";
+        return output;
     }
 
     private yearDiff(current: Date, date: Date): number {
@@ -101,7 +156,5 @@ export class DateParser {
     private isYearRounded(current: Date, date: Date): boolean {
         return this.monthDiff(current, date) == 0 && this.isWeekRounded(current, date);
     }
-
-
 
 }
