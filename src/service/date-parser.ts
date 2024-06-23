@@ -1,5 +1,5 @@
 import {TimeModifier} from "../domain/timeModifier/time-modifier";
-import {TimeModifierExtractor} from "./time-modifier-extractor";
+import {TimeModifierExtractor} from "../domain/timeModifier/time-modifier-extractor";
 import {TimeChecker} from "../domain/timeChecker/time-checker";
 import {YearTimeChecker} from "../domain/timeChecker/year-time-checker";
 import {MonthTimeChecker} from "../domain/timeChecker/month-time-checker";

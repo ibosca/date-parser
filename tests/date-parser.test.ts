@@ -1,5 +1,5 @@
 import {DateParser} from "../src/service/date-parser";
-import {TimeModifierExtractor} from "../src/service/time-modifier-extractor";
+import {TimeModifierExtractor} from "../src/domain/timeModifier/time-modifier-extractor";
 
 describe('Date Parser', () => {
 
