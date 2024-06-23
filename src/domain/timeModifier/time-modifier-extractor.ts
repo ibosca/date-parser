@@ -17,7 +17,7 @@ export class TimeModifierExtractor {
             return TimeModifierFactory.build(
                 stringModifier.charAt(0) as TimeOperator,
                 stringModifier.charAt(stringModifier.length - 1) as TimeUnit,
-                Number(stringModifier.substring(1, stringModifier.length - 1)),
+                Number(stringModifier.substring(0, stringModifier.length - 1)),
             );
         });
     }
