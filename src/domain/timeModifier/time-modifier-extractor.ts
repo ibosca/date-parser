@@ -1,7 +1,6 @@
-import {TimeModifier, TimeOperator, TimeUnit} from "../domain/timeModifier/time-modifier";
-import {AddTimeModifier} from "../domain/timeModifier/add-time-modifier";
-import {RoundTimeModifier} from "../domain/timeModifier/round-time-modifier";
-import {DateString} from "./date-parser";
+import {TimeModifier, TimeOperator, TimeUnit} from "./time-modifier";
+import {DateString} from "../../service/date-parser";
+import {TimeModifierFactory} from "./time-modifier-factory";
 
 export class TimeModifierExtractor {
     public extract(datestring: DateString): TimeModifier[] {
@@ -15,7 +14,7 @@ export class TimeModifierExtractor {
         const operationalModifiers = datestring.match(/[+-]?\d+[dMyhmsw]/g) ?? [];
 
         return operationalModifiers.map((stringModifier): TimeModifier => {
-            return new AddTimeModifier(
+            return TimeModifierFactory.build(
                 stringModifier.charAt(0) as TimeOperator,
                 stringModifier.charAt(stringModifier.length - 1) as TimeUnit,
                 Number(stringModifier.substring(1, stringModifier.length - 1)),
@@ -27,7 +26,7 @@ export class TimeModifierExtractor {
         const roundModifiers = datestring.match(/\/[dMyhmsw]/) ?? [];
 
         return roundModifiers.map((stringModifier): TimeModifier => {
-            return new RoundTimeModifier(
+            return TimeModifierFactory.build(
                 stringModifier.charAt(0) as TimeOperator,
                 stringModifier.charAt(stringModifier.length - 1) as TimeUnit
             );
