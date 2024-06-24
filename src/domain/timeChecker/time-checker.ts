@@ -11,8 +11,10 @@ export abstract class TimeChecker {
     public abstract difference(current: Date, date: Date): number;
 
     public isRounded(current: Date, date: Date, modifier: TimeModifier | undefined): boolean {
-        date = modifier ? modifier.apply(date): date;
-        return this.modifier('/').apply(date) == current;
+        current = modifier ? modifier.apply(current): current;
+        current = this.modifier('/').apply(current);
+
+        return date.getTime() == current.getTime();
     }
 
     public static toString(current: Date, date: Date, checkers: TimeChecker[]): DateString {
@@ -21,14 +23,17 @@ export abstract class TimeChecker {
         let output = 'now';
 
         for (const checker of checkers) {
+
             date = new Date(date);
+            current = new Date(current);
+
             const difference: number = checker.difference(current, date);
 
             if (difference !== 0) {
                 const sign: TimeOperator = difference > 0 ? "+": "-";
                 const differenceWithSign: string = `${sign}${Math.abs(difference)}`;
 
-                modifier = checker.modifier(sign, difference);
+                modifier = checker.modifier(sign == '+' ?  '-': '+', difference);
                 output = output.concat(`${differenceWithSign}${checker.unit()}`);
             }
 
