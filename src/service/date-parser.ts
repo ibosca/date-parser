@@ -1,13 +1,13 @@
 import {TimeModifier} from "../domain/timeModifier/time-modifier";
 import {TimeModifierExtractor} from "../domain/timeModifier/time-modifier-extractor";
 import {TimeChecker} from "../domain/timeChecker/time-checker";
-import {YearTimeChecker} from "../domain/timeChecker/year-time-checker";
-import {MonthTimeChecker} from "../domain/timeChecker/month-time-checker";
-import {WeekTimeChecker} from "../domain/timeChecker/week-time-checker";
-import {DayTimeChecker} from "../domain/timeChecker/day-time-checker";
-import {HourTimeChecker} from "../domain/timeChecker/hour-time-checker";
-import {MinuteTimeChecker} from "../domain/timeChecker/minute-time-checker";
-import {SecondTimeChecker} from "../domain/timeChecker/second-time-checker";
+import {YearTimeChecker} from "../domain/timeChecker/timeUnit/year-time-checker";
+import {MonthTimeChecker} from "../domain/timeChecker/timeUnit/month-time-checker";
+import {WeekTimeChecker} from "../domain/timeChecker/timeUnit/week-time-checker";
+import {DayTimeChecker} from "../domain/timeChecker/timeUnit/day-time-checker";
+import {HourTimeChecker} from "../domain/timeChecker/timeUnit/hour-time-checker";
+import {MinuteTimeChecker} from "../domain/timeChecker/timeUnit/minute-time-checker";
+import {SecondTimeChecker} from "../domain/timeChecker/timeUnit/second-time-checker";
 
 export type DateString = String;
 

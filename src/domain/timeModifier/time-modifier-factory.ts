@@ -1,11 +1,11 @@
 import {TimeModifier, TimeOperator, TimeUnit} from "./time-modifier";
-import {YearTimeModifier} from "./year-time-modifier";
-import {MonthTimeModifier} from "./month-time-modifier";
-import {DayTimeModifier} from "./day-time-modifier";
-import {HourTimeModifier} from "./hour-time-modifier";
-import {MinuteTimeModifier} from "./minute-time-modifier";
-import {SecondTimeModifier} from "./second-time-modifier";
-import {WeekTimeModifier} from "./week-time-modifier";
+import {YearTimeModifier} from "./timeUnit/year-time-modifier";
+import {MonthTimeModifier} from "./timeUnit/month-time-modifier";
+import {DayTimeModifier} from "./timeUnit/day-time-modifier";
+import {HourTimeModifier} from "./timeUnit/hour-time-modifier";
+import {MinuteTimeModifier} from "./timeUnit/minute-time-modifier";
+import {SecondTimeModifier} from "./timeUnit/second-time-modifier";
+import {WeekTimeModifier} from "./timeUnit/week-time-modifier";
 
 export class TimeModifierFactory {
 

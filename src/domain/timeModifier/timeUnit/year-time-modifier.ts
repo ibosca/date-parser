@@ -1,4 +1,4 @@
-import {TimeModifier} from "./time-modifier";
+import {TimeModifier} from "../time-modifier";
 
 export class YearTimeModifier extends TimeModifier {
 
