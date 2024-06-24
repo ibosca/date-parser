@@ -19,7 +19,6 @@ export abstract class TimeChecker {
 
     public static toString(current: Date, date: Date, checkers: TimeChecker[]): DateString {
 
-        let modifier: TimeModifier | undefined;
         let output = 'now';
 
         for (const checker of checkers) {
@@ -28,15 +27,14 @@ export abstract class TimeChecker {
             current = new Date(current);
 
             const difference: number = checker.difference(current, date);
+            const sign: TimeOperator = difference > 0 ? "+": "-";
 
             if (difference !== 0) {
-                const sign: TimeOperator = difference > 0 ? "+": "-";
                 const differenceWithSign: string = `${sign}${Math.abs(difference)}`;
-
-                modifier = checker.modifier(sign == '+' ?  '-': '+', difference);
                 output = output.concat(`${differenceWithSign}${checker.unit()}`);
             }
 
+            const modifier = checker.modifier(sign, difference);
             const isRounded: boolean = checker.isRounded(current, date, modifier);
             if (isRounded) {
                 output = output.concat(`/${checker.unit()}`);
