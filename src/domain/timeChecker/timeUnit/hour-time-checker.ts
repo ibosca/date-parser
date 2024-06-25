@@ -12,7 +12,7 @@ export class HourTimeChecker extends TimeChecker{
 
         const HOUR_IN_MS = 60 * 60 * 1000;
         const diff = Math.floor((end.getTime() - start.getTime()) / HOUR_IN_MS) * (isFuture ? 1 : -1);
-        return this.addModifier(diff * -1);
+        return this.addModifier(diff);
     }
 
     unit(): TimeUnit {
