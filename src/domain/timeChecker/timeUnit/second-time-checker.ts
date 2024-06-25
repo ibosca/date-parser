@@ -8,7 +8,8 @@ export class SecondTimeChecker extends TimeChecker {
         const end: Date = this.end(current, date);
         const isFuture = this.isFuture(current, date);
 
-        const differenceAmount = end.getUTCSeconds() - start.getUTCSeconds() * (isFuture ? 1 : -1);
+        const SEC_IN_MS = 60 * 1000;
+        const differenceAmount = Math.floor((end.getTime() - start.getTime()) / SEC_IN_MS) * (isFuture ? 1 : -1);
         return this.addModifier(differenceAmount);
     }
 
