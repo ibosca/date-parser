@@ -3,6 +3,7 @@ import {TimeModifier, TimeOperator, TimeUnit} from "../../timeModifier/time-modi
 import {HourTimeChecker} from "./hour-time-checker";
 import {WeekTimeChecker} from "./week-time-checker";
 import {HourTimeModifier} from "../../timeModifier/timeUnit/hour-time-modifier";
+import {DayTimeModifier} from "../../timeModifier/timeUnit/day-time-modifier";
 
 export class DayTimeChecker extends TimeChecker{
     difference(current: Date, date: Date): TimeModifier | undefined {
@@ -16,7 +17,7 @@ export class DayTimeChecker extends TimeChecker{
     }
 
     modifier(timeOperator: TimeOperator, amount?: number | undefined): TimeModifier {
-        return new HourTimeModifier(timeOperator, amount);
+        return new DayTimeModifier(timeOperator, amount);
     }
 
 }

@@ -72,6 +72,8 @@ describe('Date Parser', () => {
             expect(actual).toStrictEqual(expected);
         });
 
+
+
         test('now-1d', () => {
             const expected = 'now-1d';
             const actual = sut.stringify(new Date('2020-04-30T00:00:00.000Z'));
