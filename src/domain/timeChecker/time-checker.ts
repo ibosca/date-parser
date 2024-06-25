@@ -45,7 +45,9 @@ export abstract class TimeChecker {
 
             const difference: TimeModifier | undefined = checker.difference(current, date);
             if (difference) {
-                current = difference.applyInverse(current);
+                current = checker.isFuture(current, date)
+                    ? difference.apply(current)
+                    : difference.applyInverse(current);
                 modifiers.push(difference);
                 output = output.concat(`${difference.timeOperator}${difference.timeAmount}${checker.unit()}`);
             }
