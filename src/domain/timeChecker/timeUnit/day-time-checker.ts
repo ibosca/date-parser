@@ -6,8 +6,9 @@ import {HourTimeModifier} from "../../timeModifier/timeUnit/hour-time-modifier";
 
 export class DayTimeChecker extends TimeChecker{
     difference(current: Date, date: Date): TimeModifier | undefined {
-        const days = (date.getUTCDate() - current.getUTCDate()) - ((new WeekTimeChecker()).difference(current, date)?.timeAmount || 0) * 7;
-        return this.addModifier(days);
+        const DAYS_IN_MS = 24 * 60 * 60 * 1000;
+        const days = Math.floor((current.getTime() - date.getTime()) / DAYS_IN_MS);
+        return this.addModifier(days * -1);
     }
 
     unit(): TimeUnit {

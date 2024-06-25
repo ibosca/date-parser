@@ -53,6 +53,7 @@ describe('Date Parser', () => {
 
     describe('stringify', () => {
 
+
         test('now-1y/y', () => {
             const expected = 'now-1y/y';
             const actual = sut.stringify(new Date('2019-01-01T00:00:00.000Z'));

@@ -7,7 +7,7 @@ export class WeekTimeChecker extends TimeChecker{
     difference(current: Date, date: Date): TimeModifier | undefined {
 
         const WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
-        const difference: number = Math.round((current.getTime() - date.getTime()) / WEEK_IN_MS);
+        const difference: number = Math.floor((current.getTime() - date.getTime()) / WEEK_IN_MS);
 
         return this.addModifier(difference);
     }
