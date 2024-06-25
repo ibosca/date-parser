@@ -59,4 +59,16 @@ export abstract class TimeChecker {
 
         return output;
     }
+
+    public start(a: Date, b: Date): Date {
+        return a > b ? b: a;
+    }
+
+    public end(a: Date, b: Date): Date {
+        return a > b ? a: b;
+    }
+
+    public isFuture(now: Date, date: Date): boolean {
+        return date > now;
+    }
 }

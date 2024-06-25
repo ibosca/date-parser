@@ -5,15 +5,19 @@ import {MonthTimeModifier} from "../../timeModifier/timeUnit/month-time-modifier
 export class MonthTimeChecker extends TimeChecker{
     difference(current: Date, date: Date): TimeModifier | undefined {
 
-        const dayDiff = current.getUTCDate() - date.getUTCDate()
-        let onYearDifference: number = current.getUTCMonth() - date.getUTCMonth();
+        const start: Date = this.start(current, date);
+        const end: Date = this.end(current, date);
+        const isFuture: boolean = this.isFuture(current, date);
+
+        const dayDiff = end.getUTCDate() - start.getUTCDate()
+        let onYearDifference: number = end.getUTCMonth() - start.getUTCMonth();
 
         if (dayDiff < 0) {
             onYearDifference = onYearDifference - 1;
         }
 
-        const nonCurrentYearDifference: number = 12 * (current.getUTCFullYear() - date.getUTCFullYear());
-        return this.addModifier((onYearDifference + nonCurrentYearDifference) * -1 );
+        const nonCurrentYearDifference: number = 12 * (end.getUTCFullYear() - start.getUTCFullYear());
+        return this.addModifier((onYearDifference + nonCurrentYearDifference) * (isFuture ? 1 : -1));
     }
 
     unit(): TimeUnit {

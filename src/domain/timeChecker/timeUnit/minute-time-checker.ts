@@ -5,7 +5,12 @@ import {MinuteTimeModifier} from "../../timeModifier/timeUnit/minute-time-modifi
 
 export class MinuteTimeChecker extends TimeChecker{
     difference(current: Date, date: Date): TimeModifier | undefined {
-        const differenceAmount = date.getUTCMinutes() - current.getUTCMinutes();
+
+        const start: Date = this.start(current, date);
+        const end: Date = this.end(current, date);
+        const isFuture = this.isFuture(current, date);
+
+        const differenceAmount = end.getUTCMinutes() - start.getUTCMinutes() * (isFuture ? 1 : -1);
         return this.addModifier(differenceAmount);
     }
 
