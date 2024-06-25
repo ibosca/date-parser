@@ -10,7 +10,8 @@ export class MinuteTimeChecker extends TimeChecker{
         const end: Date = this.end(current, date);
         const isFuture = this.isFuture(current, date);
 
-        const differenceAmount = end.getUTCMinutes() - start.getUTCMinutes() * (isFuture ? 1 : -1);
+        const MIN_IN_MS = 60 * 1000;
+        const differenceAmount = Math.floor((end.getTime() - start.getTime()) / MIN_IN_MS) * (isFuture ? 1 : -1);
         return this.addModifier(differenceAmount);
     }
 
