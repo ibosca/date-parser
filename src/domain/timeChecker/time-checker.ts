@@ -37,6 +37,7 @@ export abstract class TimeChecker {
 
     public static toString(current: Date, date: Date, checkers: TimeChecker[]): DateString {
 
+        // console.log(`Current ${current.toISOString()}. Args: ${date.toISOString()}`)
         const modifiers: TimeModifier[] = [];
         let output = 'now';
 
