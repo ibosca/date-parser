@@ -27,11 +27,12 @@ export abstract class TimeChecker {
     public abstract difference(current: Date, date: Date): TimeModifier | undefined;
 
     public isRounded(current: Date, date: Date): boolean {
+
         let modifiedCurrent: Date = new Date(current);
 
         modifiedCurrent = this.roundModifier().apply(modifiedCurrent);
 
-        return date.getTime() == modifiedCurrent.getTime();
+        return current.getTime() != modifiedCurrent.getTime() && date.getTime() == modifiedCurrent.getTime();
     }
 
     public static toString(current: Date, date: Date, checkers: TimeChecker[]): DateString {
