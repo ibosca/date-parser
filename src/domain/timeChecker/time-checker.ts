@@ -6,36 +6,49 @@ export abstract class TimeChecker {
 
     public abstract unit(): TimeUnit;
 
-    public abstract modifier(timeOperator: TimeOperator, amount?: number | undefined): TimeModifier;
+    protected abstract modifier(timeOperator: TimeOperator, amount?: number | undefined): TimeModifier;
 
-    public abstract difference(current: Date, date: Date): number;
+    public roundModifier(): TimeModifier {
+        return this.modifier('/');
+    }
 
-    public isRounded(current: Date, date: Date, modifier: TimeModifier | undefined): boolean {
-        current = modifier ? modifier.apply(current): current;
-        current = this.modifier('/').apply(current);
+    public addModifier(amount: number): TimeModifier | undefined {
 
-        return date.getTime() == current.getTime();
+        if (amount == 0) {
+            return ;
+        }
+
+        return this.modifier(
+          amount > 0 ? '+': '-',
+          Math.abs(amount)
+        );
+    }
+
+    public abstract difference(current: Date, date: Date): TimeModifier | undefined;
+
+    public isRounded(current: Date, date: Date): boolean {
+        let modifiedCurrent: Date = new Date(current);
+
+        modifiedCurrent = this.roundModifier().apply(modifiedCurrent);
+
+        return date.getTime() == modifiedCurrent.getTime();
     }
 
     public static toString(current: Date, date: Date, checkers: TimeChecker[]): DateString {
 
+        const modifiers: TimeModifier[] = [];
         let output = 'now';
 
         for (const checker of checkers) {
 
-            date = new Date(date);
-            current = new Date(current);
-
-            const difference: number = checker.difference(current, date);
-            const sign: TimeOperator = difference > 0 ? "+": "-";
-
-            if (difference !== 0) {
-                const differenceWithSign: string = `${sign}${Math.abs(difference)}`;
-                output = output.concat(`${differenceWithSign}${checker.unit()}`);
+            const difference: TimeModifier | undefined = checker.difference(current, date);
+            if (difference) {
+                current = difference.applyInverse(current);
+                modifiers.push(difference);
+                output = output.concat(`${difference.timeOperator}${difference.timeAmount}${checker.unit()}`);
             }
 
-            const modifier = checker.modifier(sign, difference);
-            const isRounded: boolean = checker.isRounded(current, date, modifier);
+            const isRounded: boolean= checker.isRounded(current, date);
             if (isRounded) {
                 output = output.concat(`/${checker.unit()}`);
                 break;

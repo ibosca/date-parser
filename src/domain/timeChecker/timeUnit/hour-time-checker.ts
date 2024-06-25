@@ -5,8 +5,9 @@ import {MinuteTimeModifier} from "../../timeModifier/timeUnit/minute-time-modifi
 import {HourTimeModifier} from "../../timeModifier/timeUnit/hour-time-modifier";
 
 export class HourTimeChecker extends TimeChecker{
-    difference(current: Date, date: Date): number {
-        return date.getUTCHours() - current.getUTCHours();
+    difference(current: Date, date: Date): TimeModifier | undefined {
+        const differenceAmount = date.getUTCHours() - current.getUTCHours();
+        return this.addModifier(differenceAmount);
     }
 
     unit(): TimeUnit {

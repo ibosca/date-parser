@@ -4,8 +4,11 @@ import {DayTimeChecker} from "./day-time-checker";
 import {WeekTimeModifier} from "../../timeModifier/timeUnit/week-time-modifier";
 
 export class WeekTimeChecker extends TimeChecker{
-    difference(current: Date, date: Date): number {
-        return (date.getUTCDate() - current.getUTCDate()) / 7;
+    difference(current: Date, date: Date): TimeModifier | undefined {
+
+        const difference: number = (date.getUTCDate() - current.getUTCDate()) / 7;
+
+        return this.addModifier(difference);
     }
 
     unit(): TimeUnit {

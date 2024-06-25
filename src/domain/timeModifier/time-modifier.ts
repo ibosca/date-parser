@@ -18,8 +18,18 @@ export abstract class TimeModifier {
             : this.modify(date, this.timeAmount!);
     }
 
-    public abstract modify(date: Date, amount: number): Date;
+    public applyInverse(date: Date): Date {
+        if (this.isRoundOperation()) {
+            throw new Error('Not possible to reverse round operation');
+        }
 
-    public abstract round(date: Date): Date;
+        return this.modify(date, this.timeAmount! * -1);
+    }
+
+
+
+    protected abstract modify(date: Date, amount: number): Date;
+
+    protected abstract round(date: Date): Date;
 
 }

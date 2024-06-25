@@ -5,9 +5,9 @@ import {WeekTimeChecker} from "./week-time-checker";
 import {HourTimeModifier} from "../../timeModifier/timeUnit/hour-time-modifier";
 
 export class DayTimeChecker extends TimeChecker{
-    difference(current: Date, date: Date): number {
-        const days = (date.getUTCDate() - current.getUTCDate()) - (new WeekTimeChecker()).difference(current, date) * 7;
-        return days > 0 ? days : 0;
+    difference(current: Date, date: Date): TimeModifier | undefined {
+        const days = (date.getUTCDate() - current.getUTCDate()) - ((new WeekTimeChecker()).difference(current, date)?.timeAmount || 0) * 7;
+        return this.addModifier(days);
     }
 
     unit(): TimeUnit {

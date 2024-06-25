@@ -4,8 +4,9 @@ import {SecondTimeChecker} from "./second-time-checker";
 import {MinuteTimeModifier} from "../../timeModifier/timeUnit/minute-time-modifier";
 
 export class MinuteTimeChecker extends TimeChecker{
-    difference(current: Date, date: Date): number {
-        return date.getUTCMinutes() - current.getUTCMinutes();
+    difference(current: Date, date: Date): TimeModifier | undefined {
+        const differenceAmount = date.getUTCMinutes() - current.getUTCMinutes();
+        return this.addModifier(differenceAmount);
     }
 
     unit(): TimeUnit {
