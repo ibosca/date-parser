@@ -5,8 +5,10 @@ import {MonthTimeModifier} from "../../timeModifier/timeUnit/month-time-modifier
 
 export class MonthTimeChecker extends TimeChecker{
     difference(current: Date, date: Date): TimeModifier | undefined {
-        const differenceAmount = current.getUTCMonth() - date.getUTCMonth() - 1;
-        return this.addModifier(differenceAmount);
+        console.log(`Current: ${current.toISOString()}; Arg: ${date.toISOString()}`)
+        const onYearDifference: number = current.getUTCMonth() - date.getUTCMonth();
+        const nonCurrentYearDifference: number = 12 * (current.getUTCFullYear() - date.getUTCFullYear());
+        return this.addModifier((onYearDifference + nonCurrentYearDifference) * -1 );
     }
 
     unit(): TimeUnit {
