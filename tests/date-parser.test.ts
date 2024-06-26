@@ -66,12 +66,6 @@ describe('Date Parser', () => {
             expect(actual).toStrictEqual(expected);
         });
 
-        test('now-10M', () => {
-            const expected = 'now-10M';
-            const actual = sut.stringify(new Date('2019-07-01T00:00:00.000Z'));
-            expect(actual).toStrictEqual(expected);
-        });
-
         test('now-1d', () => {
             const expected = 'now-1d';
             const actual = sut.stringify(new Date('2020-04-30T00:00:00.000Z'));
@@ -94,6 +88,12 @@ describe('Date Parser', () => {
         test('now+1y', () => {
             const expected = 'now+1y';
             const actual = sut.stringify(new Date('2021-05-01T00:00:00.000Z'));
+            expect(actual).toStrictEqual(expected);
+        });
+
+        test('now-10M', () => {
+            const expected = 'now-10M';
+            const actual = sut.stringify(new Date('2019-07-01T00:00:00.000Z'));
             expect(actual).toStrictEqual(expected);
         });
     })
