@@ -1,4 +1,4 @@
-import {TimeModifier} from "../time-modifier";
+import {TimeModifier, TimeUnit} from "../time-modifier";
 
 export class DayTimeModifier extends TimeModifier {
 
@@ -15,5 +15,9 @@ export class DayTimeModifier extends TimeModifier {
             : date.setUTCDate(date.getUTCDate())
 
         return date;
+    }
+
+    unit(): TimeUnit {
+        return 'd';
     }
 }

@@ -1,4 +1,4 @@
-import {TimeModifier} from "../time-modifier";
+import {TimeModifier, TimeUnit} from "../time-modifier";
 
 export class SecondTimeModifier extends TimeModifier {
 
@@ -15,5 +15,9 @@ export class SecondTimeModifier extends TimeModifier {
             : date.setUTCSeconds(date.getUTCSeconds());
 
         return date;
+    }
+
+    unit(): TimeUnit {
+        return 's';
     }
 }

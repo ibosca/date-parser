@@ -6,14 +6,12 @@ import {WeekTimeModifier} from "../../timeModifier/timeUnit/week-time-modifier";
 export class WeekTimeChecker extends TimeChecker{
     difference(current: Date, date: Date): TimeModifier | undefined {
 
-        const start: Date = this.start(current, date);
-        const end: Date = this.end(current, date);
         const isFuture: boolean = this.isFuture(current, date);
 
         const WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
-        const difference: number = Math.floor((end.getTime() - start.getTime()) / WEEK_IN_MS) * (isFuture ? 1 : -1);
+        const difference: number = Math.floor(Math.abs(current.getTime() - date.getTime()) / WEEK_IN_MS);
 
-        return this.addModifier(difference);
+        return this.addModifier(difference * (isFuture ? 1 : -1));
     }
 
     unit(): TimeUnit {

@@ -1,4 +1,4 @@
-import {TimeModifier} from "../time-modifier";
+import {TimeModifier, TimeUnit} from "../time-modifier";
 
 export class MonthTimeModifier extends TimeModifier {
 
@@ -16,5 +16,9 @@ export class MonthTimeModifier extends TimeModifier {
             : date.setUTCMonth(date.getUTCMonth(), 1);
 
         return date;
+    }
+
+    unit(): TimeUnit {
+        return 'M';
     }
 }

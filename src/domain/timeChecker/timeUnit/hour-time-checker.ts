@@ -6,13 +6,11 @@ import {HourTimeModifier} from "../../timeModifier/timeUnit/hour-time-modifier";
 
 export class HourTimeChecker extends TimeChecker{
     difference(current: Date, date: Date): TimeModifier | undefined {
-        const start: Date = this.start(current, date);
-        const end: Date = this.end(current, date);
         const isFuture = this.isFuture(current, date);
 
         const HOUR_IN_MS = 60 * 60 * 1000;
-        const diff = Math.floor((end.getTime() - start.getTime()) / HOUR_IN_MS) * (isFuture ? 1 : -1);
-        return this.addModifier(diff);
+        const diff = Math.floor(Math.abs(current.getTime() - date.getTime()) / HOUR_IN_MS);
+        return this.addModifier(diff * (isFuture ? 1 : -1));
     }
 
     unit(): TimeUnit {

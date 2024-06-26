@@ -1,4 +1,4 @@
-import {TimeModifier} from "../time-modifier";
+import {TimeModifier, TimeUnit} from "../time-modifier";
 
 export class MinuteTimeModifier extends TimeModifier {
 
@@ -15,5 +15,9 @@ export class MinuteTimeModifier extends TimeModifier {
             : date.setUTCHours(date.getUTCMinutes());
 
         return date;
+    }
+
+    unit(): TimeUnit {
+        return 'm';
     }
 }

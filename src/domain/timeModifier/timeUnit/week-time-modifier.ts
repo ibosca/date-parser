@@ -1,4 +1,4 @@
-import {TimeModifier} from "../time-modifier";
+import {TimeModifier, TimeUnit} from "../time-modifier";
 
 export class WeekTimeModifier extends TimeModifier {
 
@@ -16,5 +16,9 @@ export class WeekTimeModifier extends TimeModifier {
             : date.setDate(date.getDate() - dayOfWeek)
 
         return date;
+    }
+
+    unit(): TimeUnit {
+        return 'w';
     }
 }

@@ -6,13 +6,11 @@ import {MinuteTimeModifier} from "../../timeModifier/timeUnit/minute-time-modifi
 export class MinuteTimeChecker extends TimeChecker{
     difference(current: Date, date: Date): TimeModifier | undefined {
 
-        const start: Date = this.start(current, date);
-        const end: Date = this.end(current, date);
         const isFuture = this.isFuture(current, date);
 
         const MIN_IN_MS = 60 * 1000;
-        const differenceAmount = Math.floor((end.getTime() - start.getTime()) / MIN_IN_MS) * (isFuture ? 1 : -1);
-        return this.addModifier(differenceAmount);
+        const differenceAmount = Math.floor(Math.abs(current.getTime() - date.getTime()) / MIN_IN_MS);
+        return this.addModifier(differenceAmount * (isFuture ? 1 : -1));
     }
 
     unit(): TimeUnit {

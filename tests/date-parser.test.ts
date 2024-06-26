@@ -89,6 +89,13 @@ describe('Date Parser', () => {
             const actual = sut.stringify(new Date('2020-04-26T20:00:00.000Z'));
             expect(actual).toStrictEqual(expected);
         });
+
+        // ----- ADDITIONAL TESTS ----
+        test('now+1y', () => {
+            const expected = 'now+1y';
+            const actual = sut.stringify(new Date('2021-05-01T00:00:00.000Z'));
+            expect(actual).toStrictEqual(expected);
+        });
     })
 
 });

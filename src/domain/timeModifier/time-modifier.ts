@@ -8,7 +8,7 @@ export abstract class TimeModifier {
         public readonly timeAmount?: number | undefined,
     ) {}
 
-    public isRoundOperation(): boolean {
+    protected isRoundOperation(): boolean {
         return this.timeOperator == '/' && !this.timeAmount
     }
 
@@ -18,12 +18,13 @@ export abstract class TimeModifier {
             : this.modify(date, this.timeAmount!);
     }
 
-    public applyInverse(date: Date): Date {
+    public toString(): string {
+
         if (this.isRoundOperation()) {
-            throw new Error('Not possible to reverse round operation');
+            return `${this.timeOperator}${this.unit()}`
         }
 
-        return this.modify(date, this.timeAmount! * -1);
+        return `${this.timeOperator}${Math.abs(this.timeAmount!)}${this.unit()}`
     }
 
 
@@ -31,5 +32,7 @@ export abstract class TimeModifier {
     protected abstract modify(date: Date, amount: number): Date;
 
     protected abstract round(date: Date): Date;
+
+    public abstract unit(): TimeUnit;
 
 }

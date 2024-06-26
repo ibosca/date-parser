@@ -8,11 +8,11 @@ export abstract class TimeChecker {
 
     protected abstract modifier(timeOperator: TimeOperator, amount?: number | undefined): TimeModifier;
 
-    public roundModifier(): TimeModifier {
+    protected roundModifier(): TimeModifier {
         return this.modifier('/');
     }
 
-    public addModifier(amount: number): TimeModifier | undefined {
+    protected addModifier(amount: number): TimeModifier | undefined {
 
         if (amount == 0) {
             return ;
@@ -20,46 +20,50 @@ export abstract class TimeChecker {
 
         return this.modifier(
           amount > 0 ? '+': '-',
-          Math.abs(amount)
+          amount
         );
     }
 
     public abstract difference(current: Date, date: Date): TimeModifier | undefined;
 
-    public isRounded(current: Date, date: Date): boolean {
+    public isRounded(current: Date, date: Date): TimeModifier | undefined {
 
         let modifiedCurrent: Date = new Date(current);
 
         modifiedCurrent = this.roundModifier().apply(modifiedCurrent);
 
-        return current.getTime() != modifiedCurrent.getTime() && date.getTime() == modifiedCurrent.getTime();
+        const isRounded: boolean = current.getTime() != modifiedCurrent.getTime() && date.getTime() == modifiedCurrent.getTime();
+
+        if (!isRounded) {
+            return;
+        }
+
+        return this.roundModifier();
     }
 
     public static toString(current: Date, date: Date, checkers: TimeChecker[]): DateString {
 
         // console.log(`Current ${current.toISOString()}. Args: ${date.toISOString()}`)
-        const modifiers: TimeModifier[] = [];
-        let output = 'now';
+        const differences: TimeModifier[] = [];
 
         for (const checker of checkers) {
 
             const difference: TimeModifier | undefined = checker.difference(current, date);
             if (difference) {
-                current = checker.isFuture(current, date)
-                    ? difference.apply(current)
-                    : difference.applyInverse(current);
-                modifiers.push(difference);
-                output = output.concat(`${difference.timeOperator}${difference.timeAmount}${checker.unit()}`);
+                differences.push(difference);
+                current = difference.apply(current);
             }
 
-            const isRounded: boolean= checker.isRounded(current, date);
+            const isRounded: TimeModifier | undefined = checker.isRounded(current, date);
             if (isRounded) {
-                output = output.concat(`/${checker.unit()}`);
+                differences.push(isRounded);
                 break;
             }
         }
 
-        return output;
+        return differences.reduce((carry, current): string => {
+            return carry + current.toString();
+        }, 'now');
     }
 
     public start(a: Date, b: Date): Date {

@@ -1,4 +1,4 @@
-import {TimeModifier} from "../time-modifier";
+import {TimeModifier, TimeUnit} from "../time-modifier";
 
 export class YearTimeModifier extends TimeModifier {
 
@@ -15,5 +15,9 @@ export class YearTimeModifier extends TimeModifier {
             : date.setUTCFullYear(date.getFullYear(), 0, 1);
 
         return date;
+    }
+
+    unit(): TimeUnit {
+        return 'y';
     }
 }
