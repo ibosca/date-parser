@@ -2,7 +2,7 @@ import {DateChange, TimeOperator, TimeUnit} from "../dateChange/date-change";
 import {DateString} from "../../service/date-parser";
 
 
-export abstract class TimeChecker {
+export abstract class TimeDifferenceChecker {
 
     protected abstract change(timeOperator: TimeOperator, amount?: number | undefined): DateChange;
 

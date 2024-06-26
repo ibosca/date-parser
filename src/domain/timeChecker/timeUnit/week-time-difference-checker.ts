@@ -1,9 +1,9 @@
-import {TimeChecker} from "../time-checker";
+import {TimeDifferenceChecker} from "../time-difference-checker";
 import {DateChange, TimeOperator, TimeUnit} from "../../dateChange/date-change";
-import {DayTimeChecker} from "./day-time-checker";
+import {DayTimeDifferenceChecker} from "./day-time-difference-checker";
 import {WeekDateChange} from "../../dateChange/timeUnit/week-date-change";
 
-export class WeekTimeChecker extends TimeChecker{
+export class WeekTimeDifferenceChecker extends TimeDifferenceChecker{
     difference(current: Date, date: Date): DateChange | undefined {
 
         const isFuture: boolean = this.isFuture(current, date);

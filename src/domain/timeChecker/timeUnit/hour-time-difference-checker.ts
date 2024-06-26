@@ -1,10 +1,10 @@
-import {TimeChecker} from "../time-checker";
+import {TimeDifferenceChecker} from "../time-difference-checker";
 import {DateChange, TimeOperator, TimeUnit} from "../../dateChange/date-change";
-import {MinuteTimeChecker} from "./minute-time-checker";
+import {MinuteTimeDifferenceChecker} from "./minute-time-difference-checker";
 import {MinuteDateChange} from "../../dateChange/timeUnit/minute-date-change";
 import {HourDateChange} from "../../dateChange/timeUnit/hour-date-change";
 
-export class HourTimeChecker extends TimeChecker{
+export class HourTimeDifferenceChecker extends TimeDifferenceChecker{
     difference(current: Date, date: Date): DateChange | undefined {
         const isFuture = this.isFuture(current, date);
 

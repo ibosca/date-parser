@@ -1,13 +1,13 @@
 import {DateChange} from "../domain/dateChange/date-change";
 import {DateChangeExtractor} from "../domain/dateChange/date-change-extractor";
-import {TimeChecker} from "../domain/timeChecker/time-checker";
-import {YearTimeChecker} from "../domain/timeChecker/timeUnit/year-time-checker";
-import {MonthTimeChecker} from "../domain/timeChecker/timeUnit/month-time-checker";
-import {WeekTimeChecker} from "../domain/timeChecker/timeUnit/week-time-checker";
-import {DayTimeChecker} from "../domain/timeChecker/timeUnit/day-time-checker";
-import {HourTimeChecker} from "../domain/timeChecker/timeUnit/hour-time-checker";
-import {MinuteTimeChecker} from "../domain/timeChecker/timeUnit/minute-time-checker";
-import {SecondTimeChecker} from "../domain/timeChecker/timeUnit/second-time-checker";
+import {TimeDifferenceChecker} from "../domain/timeChecker/time-difference-checker";
+import {YearTimeDifferenceChecker} from "../domain/timeChecker/timeUnit/year-time-difference-checker";
+import {MonthTimeDifferenceChecker} from "../domain/timeChecker/timeUnit/month-time-difference-checker";
+import {WeekTimeDifferenceChecker} from "../domain/timeChecker/timeUnit/week-time-difference-checker";
+import {DayTimeDifferenceChecker} from "../domain/timeChecker/timeUnit/day-time-difference-checker";
+import {HourTimeDifferenceChecker} from "../domain/timeChecker/timeUnit/hour-time-difference-checker";
+import {MinuteTimeDifferenceChecker} from "../domain/timeChecker/timeUnit/minute-time-difference-checker";
+import {SecondTimeDifferenceChecker} from "../domain/timeChecker/timeUnit/second-time-difference-checker";
 
 export type DateString = String;
 
@@ -27,19 +27,19 @@ export class DateParser {
         }, new Date());
     }
     public stringify(date: Date): DateString {
-        let current = new Date();
 
-        const checkers: TimeChecker[] = [
-            new YearTimeChecker(),
-            new MonthTimeChecker(),
-            new WeekTimeChecker(),
-            new DayTimeChecker(),
-            new HourTimeChecker(),
-            new MinuteTimeChecker(),
-            new SecondTimeChecker()
+        const checkers: TimeDifferenceChecker[] = [
+            new YearTimeDifferenceChecker(),
+            new MonthTimeDifferenceChecker(),
+            new WeekTimeDifferenceChecker(),
+            new DayTimeDifferenceChecker(),
+            new HourTimeDifferenceChecker(),
+            new MinuteTimeDifferenceChecker(),
+            new SecondTimeDifferenceChecker()
         ];
 
         const differences: DateChange[] = [];
+        let current = new Date();
 
         for (const checker of checkers) {
 
