@@ -11,10 +11,10 @@ export class WeekTimeChecker extends TimeChecker{
         const WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
         const difference: number = Math.floor(Math.abs(current.getTime() - date.getTime()) / WEEK_IN_MS);
 
-        return this.addModifier(difference * (isFuture ? 1 : -1));
+        return this.add(difference * (isFuture ? 1 : -1));
     }
 
-    modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
+    change(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
         return new WeekDateChange(timeOperator, amount);
     }
 

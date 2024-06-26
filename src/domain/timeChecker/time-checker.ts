@@ -4,19 +4,19 @@ import {DateString} from "../../service/date-parser";
 
 export abstract class TimeChecker {
 
-    protected abstract modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange;
+    protected abstract change(timeOperator: TimeOperator, amount?: number | undefined): DateChange;
 
-    protected roundModifier(): DateChange {
-        return this.modifier('/');
+    protected round(): DateChange {
+        return this.change('/');
     }
 
-    protected addModifier(amount: number): DateChange | undefined {
+    protected add(amount: number): DateChange | undefined {
 
         if (amount == 0) {
             return ;
         }
 
-        return this.modifier(
+        return this.change(
           amount > 0 ? '+': '-',
           amount
         );
@@ -28,7 +28,7 @@ export abstract class TimeChecker {
 
         let modifiedCurrent: Date = new Date(current);
 
-        modifiedCurrent = this.roundModifier().apply(modifiedCurrent);
+        modifiedCurrent = this.round().apply(modifiedCurrent);
 
         const isRounded: boolean = current.getTime() != modifiedCurrent.getTime() && date.getTime() == modifiedCurrent.getTime();
 
@@ -36,7 +36,7 @@ export abstract class TimeChecker {
             return;
         }
 
-        return this.roundModifier();
+        return this.round();
     }
 
     public start(a: Date, b: Date): Date {

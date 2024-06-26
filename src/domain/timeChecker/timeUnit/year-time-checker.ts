@@ -8,10 +8,10 @@ export class YearTimeChecker extends TimeChecker{
 
         const diffDate = new Date(Math.abs(current.getTime() - date.getTime()));
         const differenceAmount: number = Math.floor(diffDate.getFullYear() - 1970);
-        return this.addModifier(differenceAmount * (isFuture ? 1 : -1));
+        return this.add(differenceAmount * (isFuture ? 1 : -1));
     }
 
-    modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
+    change(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
         return new YearDateChange(timeOperator, amount);
     }
 

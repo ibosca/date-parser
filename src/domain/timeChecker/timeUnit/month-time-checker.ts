@@ -17,10 +17,10 @@ export class MonthTimeChecker extends TimeChecker{
         }
 
         const nonCurrentYearDifference: number = 12 * (end.getUTCFullYear() - start.getUTCFullYear());
-        return this.addModifier((onYearDifference + nonCurrentYearDifference) * (isFuture ? 1 : -1));
+        return this.add((onYearDifference + nonCurrentYearDifference) * (isFuture ? 1 : -1));
     }
 
-    modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
+    change(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
         return new MonthDateChange(timeOperator, amount);
     }
 

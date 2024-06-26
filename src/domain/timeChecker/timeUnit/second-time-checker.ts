@@ -8,10 +8,10 @@ export class SecondTimeChecker extends TimeChecker {
 
         const SEC_IN_MS = 60 * 1000;
         const differenceAmount = Math.floor(Math.abs(current.getTime() - date.getTime()) / SEC_IN_MS);
-        return this.addModifier(differenceAmount * (isFuture ? 1 : -1));
+        return this.add(differenceAmount * (isFuture ? 1 : -1));
     }
 
-    modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
+    change(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
         return new SecondDateChange(timeOperator, amount);
     }
 

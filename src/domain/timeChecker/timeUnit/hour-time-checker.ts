@@ -10,10 +10,10 @@ export class HourTimeChecker extends TimeChecker{
 
         const HOUR_IN_MS = 60 * 60 * 1000;
         const diff = Math.floor(Math.abs(current.getTime() - date.getTime()) / HOUR_IN_MS);
-        return this.addModifier(diff * (isFuture ? 1 : -1));
+        return this.add(diff * (isFuture ? 1 : -1));
     }
 
-    modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
+    change(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
         return new HourDateChange(timeOperator, amount);
     }
 
