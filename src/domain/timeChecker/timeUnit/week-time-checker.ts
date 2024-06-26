@@ -1,10 +1,10 @@
 import {TimeChecker} from "../time-checker";
-import {TimeModifier, TimeOperator, TimeUnit} from "../../timeModifier/time-modifier";
+import {DateChange, TimeOperator, TimeUnit} from "../../dateChange/date-change";
 import {DayTimeChecker} from "./day-time-checker";
-import {WeekTimeModifier} from "../../timeModifier/timeUnit/week-time-modifier";
+import {WeekDateChange} from "../../dateChange/timeUnit/week-date-change";
 
 export class WeekTimeChecker extends TimeChecker{
-    difference(current: Date, date: Date): TimeModifier | undefined {
+    difference(current: Date, date: Date): DateChange | undefined {
 
         const isFuture: boolean = this.isFuture(current, date);
 
@@ -18,8 +18,8 @@ export class WeekTimeChecker extends TimeChecker{
         return 'w';
     }
 
-    modifier(timeOperator: TimeOperator, amount?: number | undefined): TimeModifier {
-        return new WeekTimeModifier(timeOperator, amount);
+    modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
+        return new WeekDateChange(timeOperator, amount);
     }
 
 }

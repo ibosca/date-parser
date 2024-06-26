@@ -2,7 +2,7 @@
 export type TimeOperator = '+' | '-' | '/';
 export type TimeUnit = 'd' | 'M' | 'y' | 'h' | 'm' | 's' | 'w';
 
-export abstract class TimeModifier {
+export abstract class DateChange {
     constructor(
         public readonly timeOperator: TimeOperator,
         public readonly timeAmount?: number | undefined,

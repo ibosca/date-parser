@@ -1,9 +1,9 @@
 import {TimeChecker} from "../time-checker";
-import {TimeModifier, TimeOperator, TimeUnit} from "../../timeModifier/time-modifier";
-import {YearTimeModifier} from "../../timeModifier/timeUnit/year-time-modifier";
+import {DateChange, TimeOperator, TimeUnit} from "../../dateChange/date-change";
+import {YearDateChange} from "../../dateChange/timeUnit/year-date-change";
 
 export class YearTimeChecker extends TimeChecker{
-    difference(current: Date, date: Date): TimeModifier | undefined {
+    difference(current: Date, date: Date): DateChange | undefined {
         const isFuture = this.isFuture(current, date);
 
         const diffDate = new Date(Math.abs(current.getTime() - date.getTime()));
@@ -15,8 +15,8 @@ export class YearTimeChecker extends TimeChecker{
         return 'y';
     }
 
-    modifier(timeOperator: TimeOperator, amount?: number | undefined): TimeModifier {
-        return new YearTimeModifier(timeOperator, amount);
+    modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
+        return new YearDateChange(timeOperator, amount);
     }
 
 }

@@ -1,6 +1,6 @@
-import {TimeModifier, TimeUnit} from "../time-modifier";
+import {DateChange, TimeUnit} from "../date-change";
 
-export class DayTimeModifier extends TimeModifier {
+export class DayDateChange extends DateChange {
 
     modify(date: Date, amount: number): Date {
         date.setUTCDate(date.getUTCDate() + amount)

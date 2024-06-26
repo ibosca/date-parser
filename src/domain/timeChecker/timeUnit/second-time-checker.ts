@@ -1,9 +1,9 @@
 import {TimeChecker} from "../time-checker";
-import {TimeModifier, TimeOperator, TimeUnit} from "../../timeModifier/time-modifier";
-import {SecondTimeModifier} from "../../timeModifier/timeUnit/second-time-modifier";
+import {DateChange, TimeOperator, TimeUnit} from "../../dateChange/date-change";
+import {SecondDateChange} from "../../dateChange/timeUnit/second-date-change";
 
 export class SecondTimeChecker extends TimeChecker {
-    difference(current: Date, date: Date): TimeModifier | undefined {
+    difference(current: Date, date: Date): DateChange | undefined {
         const isFuture = this.isFuture(current, date);
 
         const SEC_IN_MS = 60 * 1000;
@@ -15,8 +15,8 @@ export class SecondTimeChecker extends TimeChecker {
         return 's';
     }
 
-    modifier(timeOperator: TimeOperator, amount?: number | undefined): TimeModifier {
-        return new SecondTimeModifier(timeOperator, amount);
+    modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
+        return new SecondDateChange(timeOperator, amount);
     }
 
 

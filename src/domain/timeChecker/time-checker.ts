@@ -1,4 +1,4 @@
-import {TimeModifier, TimeOperator, TimeUnit} from "../timeModifier/time-modifier";
+import {DateChange, TimeOperator, TimeUnit} from "../dateChange/date-change";
 import {DateString} from "../../service/date-parser";
 
 
@@ -6,13 +6,13 @@ export abstract class TimeChecker {
 
     public abstract unit(): TimeUnit;
 
-    protected abstract modifier(timeOperator: TimeOperator, amount?: number | undefined): TimeModifier;
+    protected abstract modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange;
 
-    protected roundModifier(): TimeModifier {
+    protected roundModifier(): DateChange {
         return this.modifier('/');
     }
 
-    protected addModifier(amount: number): TimeModifier | undefined {
+    protected addModifier(amount: number): DateChange | undefined {
 
         if (amount == 0) {
             return ;
@@ -24,9 +24,9 @@ export abstract class TimeChecker {
         );
     }
 
-    public abstract difference(current: Date, date: Date): TimeModifier | undefined;
+    public abstract difference(current: Date, date: Date): DateChange | undefined;
 
-    public isRounded(current: Date, date: Date): TimeModifier | undefined {
+    public isRounded(current: Date, date: Date): DateChange | undefined {
 
         let modifiedCurrent: Date = new Date(current);
 
@@ -44,17 +44,17 @@ export abstract class TimeChecker {
     public static toString(current: Date, date: Date, checkers: TimeChecker[]): DateString {
 
         // console.log(`Current ${current.toISOString()}. Args: ${date.toISOString()}`)
-        const differences: TimeModifier[] = [];
+        const differences: DateChange[] = [];
 
         for (const checker of checkers) {
 
-            const difference: TimeModifier | undefined = checker.difference(current, date);
+            const difference: DateChange | undefined = checker.difference(current, date);
             if (difference) {
                 differences.push(difference);
                 current = difference.apply(current);
             }
 
-            const isRounded: TimeModifier | undefined = checker.isRounded(current, date);
+            const isRounded: DateChange | undefined = checker.isRounded(current, date);
             if (isRounded) {
                 differences.push(isRounded);
                 break;

@@ -1,11 +1,11 @@
 import {TimeChecker} from "../time-checker";
-import {TimeModifier, TimeOperator, TimeUnit} from "../../timeModifier/time-modifier";
+import {DateChange, TimeOperator, TimeUnit} from "../../dateChange/date-change";
 import {MinuteTimeChecker} from "./minute-time-checker";
-import {MinuteTimeModifier} from "../../timeModifier/timeUnit/minute-time-modifier";
-import {HourTimeModifier} from "../../timeModifier/timeUnit/hour-time-modifier";
+import {MinuteDateChange} from "../../dateChange/timeUnit/minute-date-change";
+import {HourDateChange} from "../../dateChange/timeUnit/hour-date-change";
 
 export class HourTimeChecker extends TimeChecker{
-    difference(current: Date, date: Date): TimeModifier | undefined {
+    difference(current: Date, date: Date): DateChange | undefined {
         const isFuture = this.isFuture(current, date);
 
         const HOUR_IN_MS = 60 * 60 * 1000;
@@ -17,8 +17,8 @@ export class HourTimeChecker extends TimeChecker{
         return 'h';
     }
 
-    modifier(timeOperator: TimeOperator, amount?: number | undefined): TimeModifier {
-        return new HourTimeModifier(timeOperator, amount);
+    modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
+        return new HourDateChange(timeOperator, amount);
     }
 
 }

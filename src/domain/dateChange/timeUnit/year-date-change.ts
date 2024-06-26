@@ -1,6 +1,6 @@
-import {TimeModifier, TimeUnit} from "../time-modifier";
+import {DateChange, TimeUnit} from "../date-change";
 
-export class YearTimeModifier extends TimeModifier {
+export class YearDateChange extends DateChange {
 
     modify(date: Date, amount: number): Date {
         date.setUTCFullYear(date.getFullYear() + amount)

@@ -1,5 +1,5 @@
 import {DateParser} from "../src/service/date-parser";
-import {TimeModifierExtractor} from "../src/domain/timeModifier/time-modifier-extractor";
+import {DateChangeExtractor} from "../src/domain/dateChange/date-change-extractor";
 
 describe('Date Parser', () => {
 
@@ -11,7 +11,7 @@ describe('Date Parser', () => {
         jest.useFakeTimers();
         jest.setSystemTime(mockedDate);
 
-        const extractor = new TimeModifierExtractor();
+        const extractor = new DateChangeExtractor();
         sut = new DateParser(extractor);
     });
 

@@ -1,10 +1,10 @@
 import {TimeChecker} from "../time-checker";
-import {TimeModifier, TimeOperator, TimeUnit} from "../../timeModifier/time-modifier";
+import {DateChange, TimeOperator, TimeUnit} from "../../dateChange/date-change";
 import {SecondTimeChecker} from "./second-time-checker";
-import {MinuteTimeModifier} from "../../timeModifier/timeUnit/minute-time-modifier";
+import {MinuteDateChange} from "../../dateChange/timeUnit/minute-date-change";
 
 export class MinuteTimeChecker extends TimeChecker{
-    difference(current: Date, date: Date): TimeModifier | undefined {
+    difference(current: Date, date: Date): DateChange | undefined {
 
         const isFuture = this.isFuture(current, date);
 
@@ -17,8 +17,8 @@ export class MinuteTimeChecker extends TimeChecker{
         return 'm';
     }
 
-    modifier(timeOperator: TimeOperator, amount?: number | undefined): TimeModifier {
-        return new MinuteTimeModifier(timeOperator, amount);
+    modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
+        return new MinuteDateChange(timeOperator, amount);
     }
 
 }

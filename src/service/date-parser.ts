@@ -1,5 +1,5 @@
-import {TimeModifier} from "../domain/timeModifier/time-modifier";
-import {TimeModifierExtractor} from "../domain/timeModifier/time-modifier-extractor";
+import {DateChange} from "../domain/dateChange/date-change";
+import {DateChangeExtractor} from "../domain/dateChange/date-change-extractor";
 import {TimeChecker} from "../domain/timeChecker/time-checker";
 import {YearTimeChecker} from "../domain/timeChecker/timeUnit/year-time-checker";
 import {MonthTimeChecker} from "../domain/timeChecker/timeUnit/month-time-checker";
@@ -16,11 +16,11 @@ export type DateString = String;
 export class DateParser {
 
     constructor(
-        private readonly timeModifierExtractor: TimeModifierExtractor,
+        private readonly timeModifierExtractor: DateChangeExtractor,
     ) {}
 
     public parse(datestring: DateString): Date {
-        const timeModifiers: TimeModifier[] = this.timeModifierExtractor.extract(datestring);
+        const timeModifiers: DateChange[] = this.timeModifierExtractor.extract(datestring);
 
         return timeModifiers.reduce((carry, modifier): Date => {
             return modifier.apply(carry);

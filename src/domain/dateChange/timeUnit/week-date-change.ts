@@ -1,6 +1,6 @@
-import {TimeModifier, TimeUnit} from "../time-modifier";
+import {DateChange, TimeUnit} from "../date-change";
 
-export class WeekTimeModifier extends TimeModifier {
+export class WeekDateChange extends DateChange {
 
     modify(date: Date, amount: number): Date {
         date.setUTCDate(date.getUTCDate() + amount * 7)

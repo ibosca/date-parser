@@ -1,9 +1,9 @@
 import {TimeChecker} from "../time-checker";
-import {TimeModifier, TimeOperator, TimeUnit} from "../../timeModifier/time-modifier";
-import {MonthTimeModifier} from "../../timeModifier/timeUnit/month-time-modifier";
+import {DateChange, TimeOperator, TimeUnit} from "../../dateChange/date-change";
+import {MonthDateChange} from "../../dateChange/timeUnit/month-date-change";
 
 export class MonthTimeChecker extends TimeChecker{
-    difference(current: Date, date: Date): TimeModifier | undefined {
+    difference(current: Date, date: Date): DateChange | undefined {
 
         const start: Date = this.start(current, date);
         const end: Date = this.end(current, date);
@@ -24,8 +24,8 @@ export class MonthTimeChecker extends TimeChecker{
         return 'M';
     }
 
-    modifier(timeOperator: TimeOperator, amount?: number | undefined): TimeModifier {
-        return new MonthTimeModifier(timeOperator, amount);
+    modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
+        return new MonthDateChange(timeOperator, amount);
     }
 
 }
