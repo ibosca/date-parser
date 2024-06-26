@@ -11,10 +11,6 @@ export class SecondTimeChecker extends TimeChecker {
         return this.addModifier(differenceAmount * (isFuture ? 1 : -1));
     }
 
-    unit(): TimeUnit {
-        return 's';
-    }
-
     modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
         return new SecondDateChange(timeOperator, amount);
     }

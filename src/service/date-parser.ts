@@ -16,20 +16,20 @@ export type DateString = String;
 export class DateParser {
 
     constructor(
-        private readonly timeModifierExtractor: DateChangeExtractor,
+        private readonly dateChangeExtractor: DateChangeExtractor,
     ) {}
 
     public parse(datestring: DateString): Date {
-        const timeModifiers: DateChange[] = this.timeModifierExtractor.extract(datestring);
+        const timeModifiers: DateChange[] = this.dateChangeExtractor.extract(datestring);
 
         return timeModifiers.reduce((carry, modifier): Date => {
             return modifier.apply(carry);
         }, new Date());
     }
     public stringify(date: Date): DateString {
-        const current = new Date();
+        let current = new Date();
 
-        const output = TimeChecker.toString(current, date, [
+        const checkers: TimeChecker[] = [
             new YearTimeChecker(),
             new MonthTimeChecker(),
             new WeekTimeChecker(),
@@ -37,16 +37,28 @@ export class DateParser {
             new HourTimeChecker(),
             new MinuteTimeChecker(),
             new SecondTimeChecker()
-        ]);
+        ];
 
-        console.log(`
-        Current: ${current.toISOString()} 
-        Date: ${date.toISOString()} 
-        
-        Output: ${output}
-        `);
+        const differences: DateChange[] = [];
 
-        return output;
+        for (const checker of checkers) {
+
+            const difference: DateChange | undefined = checker.difference(current, date);
+            if (difference) {
+                differences.push(difference);
+                current = difference.apply(current);
+            }
+
+            const isRounded: DateChange | undefined = checker.isRounded(current, date);
+            if (isRounded) {
+                differences.push(isRounded);
+                break;
+            }
+        }
+
+        return differences.reduce((carry, current): string => {
+            return carry + current.toString();
+        }, 'now');
     }
 
 

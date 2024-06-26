@@ -11,10 +11,6 @@ export class YearTimeChecker extends TimeChecker{
         return this.addModifier(differenceAmount * (isFuture ? 1 : -1));
     }
 
-    unit(): TimeUnit {
-        return 'y';
-    }
-
     modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
         return new YearDateChange(timeOperator, amount);
     }

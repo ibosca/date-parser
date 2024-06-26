@@ -14,10 +14,6 @@ export class WeekTimeChecker extends TimeChecker{
         return this.addModifier(difference * (isFuture ? 1 : -1));
     }
 
-    unit(): TimeUnit {
-        return 'w';
-    }
-
     modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
         return new WeekDateChange(timeOperator, amount);
     }

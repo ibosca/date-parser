@@ -13,10 +13,6 @@ export class HourTimeChecker extends TimeChecker{
         return this.addModifier(diff * (isFuture ? 1 : -1));
     }
 
-    unit(): TimeUnit {
-        return 'h';
-    }
-
     modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
         return new HourDateChange(timeOperator, amount);
     }

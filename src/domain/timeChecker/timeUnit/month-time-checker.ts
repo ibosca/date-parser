@@ -20,10 +20,6 @@ export class MonthTimeChecker extends TimeChecker{
         return this.addModifier((onYearDifference + nonCurrentYearDifference) * (isFuture ? 1 : -1));
     }
 
-    unit(): TimeUnit {
-        return 'M';
-    }
-
     modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
         return new MonthDateChange(timeOperator, amount);
     }

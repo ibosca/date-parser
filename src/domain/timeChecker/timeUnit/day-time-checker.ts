@@ -14,10 +14,6 @@ export class DayTimeChecker extends TimeChecker{
         return this.addModifier(days * (isFuture ? 1 : -1));
     }
 
-    unit(): TimeUnit {
-        return 'd';
-    }
-
     modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
         return new DayDateChange(timeOperator, amount);
     }

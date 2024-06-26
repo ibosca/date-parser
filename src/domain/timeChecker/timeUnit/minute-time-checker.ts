@@ -13,10 +13,6 @@ export class MinuteTimeChecker extends TimeChecker{
         return this.addModifier(differenceAmount * (isFuture ? 1 : -1));
     }
 
-    unit(): TimeUnit {
-        return 'm';
-    }
-
     modifier(timeOperator: TimeOperator, amount?: number | undefined): DateChange {
         return new MinuteDateChange(timeOperator, amount);
     }
